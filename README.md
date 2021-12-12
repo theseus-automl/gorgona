@@ -97,7 +97,48 @@ pr('hello, world!', True)
 # BEFORE: ...
 # AFTER: ...
 # -------------------------
+```  
+
+### 3. Writing custom stages
+Important notes:
+1. You must inherit from any of the base stages
+2. You must use **register** decorator on your class. Provided alias is used to identify your stage when parsing config
+3. No duplicate aliases are allowed
+
+There are two base stages to choose from:
+- **BaseStage** is the most flexible one. You can do anything in call method, for example:
+```python
+from gorgona.stages import BaseStage, register
+
+@register(alias='my_stage')
+class MyStage(BaseStage):
+    def __init__(self, name, regexp):
+        super().__init__(name, regexp)
+
+    def __call__(self, text, *args, **kwargs):
+        print('this is my stage!')
+        
+        text = self._regexp.sub(':)', text)
+
+        return text
+```
+- **Replacer** allows you to create convenient text replacement stages. For example, standard HtmlClenaer is a Replacer:
+```python
+from gorgona.stages import Replacer
+
+class HtmlCleaner(Replacer):
+    def __init__(
+        self,
+        name: str,
+        repl: str,
+    ) -> None:
+        super().__init__(
+            name,
+            r'<.*?>',
+            repl,
+        )
 ```
 
-### 3. Development
+
+### 4. Development
 Feel free to open issues, send pull requests and ask any questions!
