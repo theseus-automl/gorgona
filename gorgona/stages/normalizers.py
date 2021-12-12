@@ -8,20 +8,18 @@ class UnicodeNormalizer(BaseStage):
     def __init__(
         self,
         name: str,
-        mode: str,
+        form: str,
     ) -> None:
         super().__init__(name)
-        self._mode = mode
+        self._form = form.upper()
 
     def __call__(
         self,
         text: str,
-        *args,
-        **kwargs,
     ) -> str:
         return normalize(
-            unistr=text,
-            form=self._mode,
+            self._form,
+            text,
         )
 
 
