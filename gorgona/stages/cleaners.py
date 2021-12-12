@@ -1,3 +1,7 @@
+import re
+
+from emoji import EMOJI_DATA
+
 from gorgona.stages.base.replacer import Replacer
 
 
@@ -49,5 +53,18 @@ class UrlCleaner(Replacer):
         super().__init__(
             name,
             r'^https?:\/\/.*[\r\n]*',
+            repl,
+        )
+
+
+class EmojiCleaner(Replacer):
+    def __init__(
+        self,
+        name: str,
+        repl: str,
+    ) -> None:
+        super().__init__(
+            name,
+            u'(' + u'|'.join(re.escape(u) for u in sorted(EMOJI_DATA, key=len, reverse=True)) + u')',
             repl,
         )
