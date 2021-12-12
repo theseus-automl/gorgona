@@ -5,23 +5,7 @@ from typing import Generator
 from yaml import safe_load
 
 from gorgona.preprocessor.default import Defaults
-from gorgona.stages.base.splitter import Splitter
-from gorgona.stages.base.stripper import Stripper
-from gorgona.stages.cleaners import *
-from gorgona.stages.normalizers import *
-
-_ALIASES = {
-    'replace': Replacer,
-    'strip': Stripper,
-    'split': Splitter,
-    'unicode': UnicodeNormalizer,
-    'whitespace': WhitespaceNormalizer,
-    'html': HtmlCleaner,
-    'email': EmailCleaner,
-    'phone': PhoneNumberCleaner,
-    'url': UrlCleaner,
-    'emoji': EmojiCleaner,
-}
+from gorgona.stages.aliases import ALIASES
 
 
 class Preprocessor:
@@ -60,10 +44,10 @@ class Preprocessor:
         for stage in cfg['stages']:
             cls = stage['type']
 
-            if cls not in _ALIASES:
-                raise ValueError(f'unknown stage {cls}. Possible stages: {" ".join(_ALIASES.keys())}')
+            if cls not in ALIASES:
+                raise ValueError(f'unknown stage {cls}. Possible stages: {" ".join(ALIASES.keys())}')
 
-            cls = _ALIASES[cls]
+            cls = ALIASES[cls]
             del stage['type']
 
             init_args = set(signature(cls.__init__).parameters.keys())
