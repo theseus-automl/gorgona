@@ -12,7 +12,7 @@ class BaseStage(ABC):
         name: str,
         regexp: Optional[str] = None,
     ) -> None:
-        self._name = name
+        self.name = name
 
         if regexp is not None:
             self._regexp = re.compile(regexp)
