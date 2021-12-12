@@ -6,11 +6,13 @@ class Splitter(BaseStage):
         self,
         name: str,
         regexp: str,
+        join_on: str,
     ) -> None:
         super().__init__(
             name,
             regexp,
         )
+        self._join_on = join_on
 
     def __call__(
         self,
@@ -18,8 +20,10 @@ class Splitter(BaseStage):
         *args,
         **kwargs,
     ) -> str:
-        return self._regexp.split(
-            text,
-            *args,
-            **kwargs,
+        return self._join_on.join(
+            self._regexp.split(
+                text,
+                *args,
+                **kwargs,
+            ),
         )
