@@ -1,0 +1,23 @@
+stages:
+  - type: "unicode"
+    form: "nfkd"
+
+  - type: "html"
+    repl: ""
+
+  - type: "email"
+    repl: ""
+
+  - type: "phone"
+    repl: ""
+
+  - type: "url"
+    repl: ""
+
+  - type: "emoji"
+    repl: ""
+
+  - type: "whitespace"
+    repl: ""
+
+  - type: "strip"
