@@ -7,6 +7,8 @@ from fasttext import load_model
 from gorgona._paths import _FT_MODEL_PATH
 
 
+
+
 class LanguageDetector:
     def __init__(
         self,
