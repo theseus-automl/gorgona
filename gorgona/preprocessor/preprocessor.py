@@ -1,6 +1,5 @@
 from inspect import signature
 from pathlib import Path
-from typing import Generator
 
 from yaml import safe_load
 
@@ -19,7 +18,7 @@ class Preprocessor:
         self._stages = []
         self._default_repl = None
         self._default_join_on = None
-        self._stage_num_factory = self._get_stage_number()
+        self._last_stage_num = 0
 
         with open(config_path, 'r', encoding='utf-8') as f:
             self._parse_config(safe_load(f))
@@ -60,7 +59,8 @@ class Preprocessor:
                 kwargs['join_on'] = self._default_join_on
 
             if 'name' not in kwargs:
-                kwargs['name'] = f'stage {next(self._stage_num_factory)}'
+                kwargs['name'] = f'stage {self._last_stage_num}'
+                self._last_stage_num += 1
 
             self._stages.append(cls(**kwargs))
 
@@ -84,11 +84,3 @@ class Preprocessor:
                 print(f'{"-" * 100}\n')
 
         return text
-
-    @staticmethod
-    def _get_stage_number() -> Generator[int, None, None]:
-        i = 0
-
-        while True:
-            yield i
-            i += 1

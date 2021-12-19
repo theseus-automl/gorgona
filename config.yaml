@@ -1,3 +1,7 @@
+defaults:
+  repl: ""
+  join_on: " "
+
 stages:
   - type: "unicode"
     form: "nfkd"
@@ -21,3 +25,8 @@ stages:
     repl: ""
 
   - type: "strip"
+
+  - type: "lang-detection"
+    model_path: "/Users/tkasimov/Downloads/lid.176.bin"
+    threshold: 0.9
+    target_lang: "en"

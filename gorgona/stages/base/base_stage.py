@@ -21,7 +21,5 @@ class BaseStage(ABC):
     def __call__(
         self,
         text: str,
-        *args,
-        **kwargs,
     ) -> None:
         pass
