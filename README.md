@@ -43,11 +43,16 @@ stages:
   - type: "strip"
 ```
 
-Each stage includes following parameters:
+Each stage may includes following parameters:
 1. **type** - stage type
 2. **name** - optional stage name. It can be useful for debug mode
 3. **repl** - string to replace on for stages based on replacing
 4. **join_on** - string to join on for stages based on splitting  
+
+Language detection stage is a bit more complex and may include such parameters:
+1. **model_path** - path to FastText model for language detection. You can download it from [here](https://fasttext.cc/docs/en/language-identification.html) or left it to Gorgona
+2. **target_lang** - texts in languages different from the target are replaced with empty strings
+3. **threshold** - max threshold for set language to unknown
 
 You can use **defaults** section to set custom default **repl** and **join_on** for all stages:
 ```yaml
@@ -70,6 +75,11 @@ texts = [...]
 # start preprocessing
 res = r.run(texts)
 ```  
+
+Previous example uses **multiprocessing** as a backend, but **Ray** is also supported. If you don't know how to set up a cluster, Ray has beautiful [docs](https://docs.ray.io/en/latest/index.html):
+```python
+r = Runner(Path('config.yaml'), 4, backend='ray', ray_cluster_address='<address>')
+```
 
 You can also use **Preprocessor** separately in your code:
 ```python
