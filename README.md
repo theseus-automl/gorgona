@@ -76,6 +76,11 @@ texts = [...]
 res = r.run(texts)
 ```  
 
+Previous example uses **multiprocessing** as a backend, but **Ray** is also supported. If you don't know how to set up a cluster, Ray has beautiful [docs](https://docs.ray.io/en/latest/index.html):
+```python
+r = Runner(Path('config.yaml'), 4, backend='ray', ray_cluster_address='<address>')
+```
+
 You can also use **Preprocessor** separately in your code:
 ```python
 from pathlib import Path
