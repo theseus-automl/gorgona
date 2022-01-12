@@ -1,4 +1,5 @@
 import re
+from string import punctuation
 
 from emoji import EMOJI_DATA
 
@@ -66,5 +67,32 @@ class EmojiCleaner(Replacer):
         super().__init__(
             name,
             u'(' + u'|'.join(re.escape(u) for u in sorted(EMOJI_DATA, key=len, reverse=True)) + u')',
+            repl,
+        )
+
+
+class MentionCleaner(Replacer):
+    def __init__(
+        self,
+        name: str,
+        repl: str,
+    ) -> None:
+        super().__init__(
+            name,
+            r'@(\S+|$)',
+            repl,
+        )
+
+
+class SpecialSymbolsCleaner(Replacer):
+    def __init__(
+        self,
+        name: str,
+        repl: str,
+        exceptions: str = '',
+    ) -> None:
+        super().__init__(
+            name,
+            ''.join(ch for ch in punctuation if ch not in exceptions) if exceptions else punctuation,
             repl,
         )

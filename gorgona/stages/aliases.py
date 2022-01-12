@@ -16,4 +16,7 @@ ALIASES = {
     'url': UrlCleaner,
     'emoji': EmojiCleaner,
     'lang-detection': LanguageDetector,
+    'lower': Lowercaser,
+    'mention': MentionCleaner,
+    'special': SpecialSymbolsCleaner,
 }
