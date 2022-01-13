@@ -250,7 +250,7 @@ class LanguageDetector(BaseStage):
             self._threshold = 0
 
         if model_path is None:
-            if _FT_MODEL_PATH is None:
+            if not _FT_MODEL_PATH.exists():
                 self._download_model()
 
             self._model = FasttextWrapper(_FT_MODEL_PATH)
@@ -281,6 +281,7 @@ class LanguageDetector(BaseStage):
 
     @staticmethod
     def _download_model():
+        _FT_MODEL_PATH.touch(exist_ok=True)
         urlretrieve(
             'https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin',
             _FT_MODEL_PATH,
