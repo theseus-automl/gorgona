@@ -139,3 +139,16 @@ class SpecialSymbolsCleaner(Replacer):
             f"[{''.join(ch for ch in escaped if ch not in exceptions) if exceptions else escaped}]",
             repl,
         )
+
+
+class NumberCleaner(Replacer):
+    def __init__(
+        self,
+        name: str,
+        repl: str,
+    ) -> None:
+        super().__init__(
+            name,
+            r'\b[-+]?\d*\.?\d+|[-+]?\d+\b',
+            repl,
+        )
