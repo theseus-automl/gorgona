@@ -1,4 +1,4 @@
-attrs==21.2.0
+attrs==21.4.0
 click==8.0.3
 Deprecated==1.2.13
 emoji==1.6.1
