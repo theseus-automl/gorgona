@@ -1,4 +1,4 @@
-attrs==21.2.0
+attrs==21.4.0
 click==8.0.3
 Deprecated==1.2.13
 emoji==1.6.1
@@ -9,6 +9,7 @@ importlib-resources==5.4.0
 jsonschema==4.3.1
 msgpack==1.0.3
 numpy==1.21.4
+phonenumbers==8.12.41
 protobuf==3.19.1
 pybind11==2.8.1
 pyrsistent==0.18.0

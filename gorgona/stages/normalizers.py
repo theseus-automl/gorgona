@@ -3,6 +3,13 @@ from unicodedata import normalize
 from gorgona.stages.base.base_stage import BaseStage
 from gorgona.stages.base.replacer import Replacer
 
+_NORMALIZATION_FORMS = {
+    'NFC',
+    'NFKC',
+    'NFD',
+    'NFKD',
+}
+
 
 class UnicodeNormalizer(BaseStage):
     def __init__(
@@ -11,7 +18,13 @@ class UnicodeNormalizer(BaseStage):
         form: str,
     ) -> None:
         super().__init__(name)
-        self._form = form.upper()
+
+        form = form.upper()
+
+        if form not in _NORMALIZATION_FORMS:
+            raise ValueError(f'unknown form {form}. Consider using {", ".join(sorted(_NORMALIZATION_FORMS))}')
+
+        self._form = form
 
     def __call__(
         self,
@@ -34,3 +47,17 @@ class WhitespaceNormalizer(Replacer):
             r' +',
             repl,
         )
+
+
+class Lowercaser(BaseStage):
+    def __init__(
+        self,
+        name: str,
+    ) -> None:
+        super().__init__(name)
+
+    def __call__(
+        self,
+        text: str,
+    ) -> str:
+        return text.lower()
