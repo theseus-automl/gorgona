@@ -139,3 +139,33 @@ class SpecialSymbolsCleaner(Replacer):
             f"[{''.join(ch for ch in escaped if ch not in exceptions) if exceptions else escaped}]",
             repl,
         )
+
+
+class NumberCleaner(Replacer):
+    def __init__(
+        self,
+        name: str,
+        repl: str,
+    ) -> None:
+        super().__init__(
+            name,
+            r"[-+]?\d+[' kк.,`]?\d*",
+            repl,
+        )
+
+        # some variants
+        # ([-+]?\d+[' kк.,`]?\d*|[-+]?\d*[.,]?\d+) - best
+        # ([-+]?\d+[' kк`]?\d*|[-+]?\d*[.,]?\d+) - 2nd place
+        # (\B|\b)([-+]?\d*[.,]?\d+|[-+]?\d+[' kк`]?\d*)\b
+
+    def __call__(
+        self,
+        text: str,
+    ) -> str:
+        for match in self._regexp.findall(text):
+            text = text.replace(
+                match.strip(),
+                self._repl,
+            )
+
+        return text
