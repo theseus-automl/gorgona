@@ -19,4 +19,5 @@ ALIASES = {
     'lower': Lowercaser,
     'mention': MentionCleaner,
     'special': SpecialSymbolsCleaner,
+    'number': NumberCleaner,
 }
